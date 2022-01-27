@@ -14,11 +14,12 @@
 -define(SERVER, ?MODULE).
 
 start_link() ->
-    supervisor:start_link({global, ?SERVER}, ?MODULE, []).
+    supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
 init([]) ->
     Port = application:get_env(draft_example, http_port, 8080),
-    ElliOpts = [{callback, draft_example_handler}, {port, Port}],
+    Host = application:get_env(draft_example, http_host, 0.0.0.0),
+    ElliOpts = [{callback, draft_example_handler}, {port, Port}, {host, Host}],
 
     ElliSpec = #{id => draft_example_server,
                  start => {elli, start_link, [ElliOpts]},
