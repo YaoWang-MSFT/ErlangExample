@@ -18,8 +18,7 @@ start_link() ->
 
 init([]) ->
     Port = application:get_env(draft_example, http_port, 8080),
-    Host = application:get_env(draft_example, http_host, "0.0.0.0"),
-    ElliOpts = [{callback, draft_example_handler}, {port, Port}, {host, Host}],
+    ElliOpts = [{callback, draft_example_handler}, {port, Port}],
 
     ElliSpec = #{id => draft_example_server,
                  start => {elli, start_link, [ElliOpts]},
